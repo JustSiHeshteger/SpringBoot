@@ -1,7 +1,8 @@
 package com.example.springboot.entity;
 
 import jakarta.persistence.*;
-/*import javax.persistance.*;*/
+
+import java.util.Objects;
 
 @Entity
 @Table(name = "users")
@@ -23,16 +24,15 @@ public class User {
     @Column(name = "country")
     private String country;
 
+    public User() {
+    }
+
     public User(String name, String lastName, String email, String country) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.country = country;
     }
-
-    public User() {
-    }
-
     public int getId() {
         return id;
     }
@@ -71,5 +71,28 @@ public class User {
 
     public void setCountry(String country) {
         this.country = country;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User user)) return false;
+
+        if (id != user.id) return false;
+        if (!Objects.equals(name, user.name)) return false;
+        if (!Objects.equals(lastName, user.lastName)) return false;
+        if (!Objects.equals(email, user.email)) return false;
+
+        return Objects.equals(country, user.country);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result += 31 * result + (name != null ? name.hashCode() : 0);
+        result += 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result += 31 * result + (email != null ? email.hashCode() : 0);
+        result += 31 * result + (country != null ? country.hashCode() : 0);
+        return result;
     }
 }

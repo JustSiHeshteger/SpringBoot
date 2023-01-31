@@ -17,37 +17,27 @@ public class UserController {
         this.userService = userService;
     }
 
-    ///Display
-
     @GetMapping("/")
-    public String displayUsers(Model model) {
+    public String getAllUsers(Model model) {
         model.addAttribute("allUsers", userService.getAllUsers());
         return "users";
     }
 
-    ///Display
-
-    ///Add
-
     @GetMapping("/new")
-    public String addUser(Model model) {
+    public String addingNewUser(Model model) {
         model.addAttribute("user", new User());
         return "add_user";
     }
 
     @PostMapping("/addUser")
-    public String saveUser(@ModelAttribute("user") User user) {
+    public String savingUser(@ModelAttribute("user") User user) {
         userService.addUser(user);
         return "redirect:/";
     }
 
-    ///Add
-
-    ///Update
-
     @GetMapping("/editUser/{userId}")
-    public String editUser(@PathVariable("userId") int id, Model model){
-        model.addAttribute("user", userService.readUser(id));
+    public String editingUser(@PathVariable("userId") int id, Model model){
+        model.addAttribute("user", userService.getUserById(id));
         return "edit_user";
     }
 
@@ -58,16 +48,9 @@ public class UserController {
         return "redirect:/";
     }
 
-    ///Update
-
-    ///Delete
-
     @DeleteMapping("deleteUser/{getId}")
     public String deleteUser(@PathVariable int getId) {
         userService.deleteUser(getId);
         return "redirect:/";
     }
-
-    ///Delete
-
 }

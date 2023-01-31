@@ -9,11 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 public class UserServiceImpl implements UserService {
 
-    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
     public List<User> getAllUsers() {
@@ -21,22 +24,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void addUser(User user) {
         this.userRepository.addUser(user);
     }
 
     @Override
+    @Transactional
     public void updateUser(User user) {
         this.userRepository.updateUser(user);
     }
 
     @Override
+    @Transactional
     public void deleteUser(int id) {
         this.userRepository.deleteUser(id);
     }
 
     @Override
-    public User readUser(int id) {
-        return this.userRepository.readUser(id);
+    public User getUserById(int id) {
+        return this.userRepository.getUserById(id);
     }
 }

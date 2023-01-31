@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-@Transactional
 public class UserRepositoryImpl implements UserRepository {
 
     @PersistenceContext
@@ -21,22 +20,25 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
+    @Transactional
     public void addUser(User user) {
         entityManager.persist(user);
     }
 
     @Override
+    @Transactional
     public void updateUser(User user) {
         entityManager.merge(user);
     }
 
     @Override
+    @Transactional
     public void deleteUser(int id) {
-        entityManager.remove(readUser(id));
+        entityManager.remove(getUserById(id));
     }
 
     @Override
-    public User readUser(int id) {
+    public User getUserById(int id) {
         return entityManager.find(User.class, id);
     }
 }
